@@ -1,4 +1,6 @@
-Contenu pédagogique en cours de publication : images/README.txt
-Consultez le fichier README.md du dépôt pour les instructions.
+Illustrations pédagogiques du cours Kubernetes FOMA :
+- architecture-kubernetes.svg : architecture Frontend, Backend, PostgreSQL, StatefulSet et PVC.
+- request-flow.svg : parcours de la requête utilisateur jusqu'à la base de données.
+- networking-flow.svg : DNS, CoreDNS, Service, ClusterIP, EndpointSlices et dataplane.
 
-Le fichier complet du cours et des manifestes sera remplacé par la version détaillée dans la prochaine mise à jour.
+Les diagrammes sont des fichiers SVG consultables directement dans GitHub.
