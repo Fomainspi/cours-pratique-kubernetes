@@ -1,4 +1,53 @@
-Contenu pédagogique en cours de publication : k8s/07-frontend-deployment.yaml
-Consultez le fichier README.md du dépôt pour les instructions.
-
-Le fichier complet du cours et des manifestes sera remplacé par la version détaillée dans la prochaine mise à jour.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foma-frontend
+  namespace: foma-shop
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: foma-frontend
+  template:
+    metadata:
+      labels:
+        app: foma-frontend
+    spec:
+      containers:
+        - name: frontend
+          # Replace with your image. Assumes server-side Next.js.
+          image: ghcr.io/ORG/foma-frontend:1.0.0
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            # Internal URL is for server-side code running inside Kubernetes.
+            - name: BACKEND_INTERNAL_URL
+              value: http://foma-backend-service
+          startupProbe:
+            httpGet:
+              path: /health/startup
+              port: http
+            periodSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
