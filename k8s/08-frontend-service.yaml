@@ -1,4 +1,13 @@
-Contenu pédagogique en cours de publication : k8s/08-frontend-service.yaml
-Consultez le fichier README.md du dépôt pour les instructions.
-
-Le fichier complet du cours et des manifestes sera remplacé par la version détaillée dans la prochaine mise à jour.
+apiVersion: v1
+kind: Service
+metadata:
+  name: foma-frontend-service
+  namespace: foma-shop
+spec:
+  type: ClusterIP
+  selector:
+    app: foma-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
